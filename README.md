@@ -19,8 +19,17 @@ The Environment Settings Manager consists of an Excel spreadsheet and an associa
 
 The Environment Settings Manager is also integrated into the [Deployment Framework for BizTalk](https://github.com/BTDF).
 
+## Modifications
+The modifications to the Environment Settings Manager enable settings to reference other settings.
+These references are in the well known format ${SettingName} and a setting can contain 0, one or more references, e.g. ${DefaultDataDrive}Archive\${ProductCode}\
+Settings do not need to be in a specific order, the modifications will resolve the references in a loop (if necessary).
+
+### See [MODLICENSE.md](MODLICENSE.md) for license notes for this fork.
+
 ## License
 
 Copyright (c) Thomas F. Abraham. All rights reserved.
 
 Licensed under the [MIT](LICENSE.txt) License.
+
+Modifications authored by @PJVervoorn are released under the [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) license.

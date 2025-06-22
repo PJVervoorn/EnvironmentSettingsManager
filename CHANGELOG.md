@@ -1,3 +1,9 @@
+## Version 1.7R (6/22/2025)
+
+Changes in this release:
+
+* NEW: Add support for references in settings
+
 ## Version 1.7 (7/8/2020)
 
 Changes in this release:

@@ -4,9 +4,12 @@
 using System;
 using System.Data;
 using System.IO;
+using System.Reflection;
 
 namespace EnvironmentSettingsExporter
 {
+    using InternalExtensions;
+
     /// <summary>
     /// This application reads the deployment environment settings from an EnvironmentSettings.xls/.xml Excel file
     /// and exports them to one or more XML files.
@@ -37,13 +40,11 @@ namespace EnvironmentSettingsExporter
         {
             ConsoleColor defaultConsoleColor = Console.ForegroundColor;
 
-            Version assemblyVersion = System.Reflection.Assembly.GetEntryAssembly().GetName().Version;
-
+            var assemblyVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(
-                "Environment Settings Spreadsheet to XML Exporter "
-                + assemblyVersion.Major + "." + assemblyVersion.Minor + "." + assemblyVersion.Build);
-            Console.WriteLine("[https://github.com/tfabraham/EnvironmentSettingsManager]");
+            Console.WriteLine($"Environment Settings Spreadsheet to XML Exporter {assemblyVersion} (Reference Edition)");
+            Console.WriteLine("[https://github.com/PJVervoorn/EnvironmentSettingsManager]");
+            Console.WriteLine("Forked from [https://github.com/tfabraham/EnvironmentSettingsManager]");
             Console.WriteLine("Copyright (C) 2007 Thomas F. Abraham.  All Rights Reserved.");
             Console.WriteLine();
             Console.ForegroundColor = defaultConsoleColor;
@@ -101,6 +102,9 @@ namespace EnvironmentSettingsExporter
 
                     settingsTable.Merge(SettingsFileReader.ReadSettingsFromExcelFile(inputFile2));
                 }
+
+                //Resolve references to settings with their values
+                settingsTable.ResolveReferences();
 
                 if (!Directory.Exists(outputPath))
                 {
